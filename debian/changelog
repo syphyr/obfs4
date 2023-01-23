@@ -1,0 +1,76 @@
+obfs4proxy (0.0.7-2) unstable; urgency=medium
+
+  * Team upload.
+  * Switch to XS-Go-Import-Path
+
+ -- Michael Stapelberg <stapelberg@debian.org>  Fri, 09 Feb 2018 17:16:31 +0100
+
+obfs4proxy (0.0.7-1) unstable; urgency=medium
+
+  [ Jérémy Bobbio ]
+  * New upstream release.
+  * Bump Standards-Version, no changes required.
+
+  [ Ximin Luo ]
+  * Clarify the contents of the binary package. (Closes: #777245)
+
+ -- Jérémy Bobbio <lunar@debian.org>  Wed, 16 Nov 2016 10:03:41 +0000
+
+obfs4proxy (0.0.6-2) unstable; urgency=medium
+
+  * Add myself to Uploaders.
+  * Increase test timeout for lower-end arm* architectures.
+  * Update to latest Standards-Version; no changes required.
+
+ -- Ximin Luo <infinity0@debian.org>  Thu, 17 Mar 2016 23:19:41 +0100
+
+obfs4proxy (0.0.6-1) unstable; urgency=medium
+
+  * Team upload.
+  * New upstream release.
+
+ -- Ximin Luo <infinity0@debian.org>  Sat, 20 Feb 2016 23:27:39 +0100
+
+obfs4proxy (0.0.5-2) unstable; urgency=medium
+
+  * go.crypto and go.net have been updated, so drop the obsolete patches and
+    tighten the build-deps.
+
+ -- Jérémy Bobbio <lunar@debian.org>  Sun, 28 Jun 2015 00:17:51 +0200
+
+obfs4proxy (0.0.5-1) unstable; urgency=low
+
+  * New upstream release.
+  * Add a patch to restore previous path for go.net.
+
+ -- Jérémy Bobbio <lunar@debian.org>  Thu, 30 Apr 2015 19:52:58 +0200
+
+obfs4proxy (0.0.4-1) unstable; urgency=low
+
+  * New upstream release.
+  * Remove obsolete patches.
+  * Add a patch to restore previous path for go.crypto.
+
+ -- Jérémy Bobbio <lunar@debian.org>  Thu, 26 Feb 2015 13:23:03 +0100
+
+obfs4proxy (0.0.3-2) unstable; urgency=medium
+
+  * Add a patch to improve the performance of the obfs4 handshake test.
+    (Closes: #763905)
+
+ -- Jérémy Bobbio <lunar@debian.org>  Fri, 03 Oct 2014 20:43:30 +0200
+
+obfs4proxy (0.0.3-1) unstable; urgency=medium
+
+  * New upstream release.
+  * Drop obsolete upstream patches.
+  * Improve README.Debian.
+  * Bump Standards-Version, no changes required.
+
+ -- Jérémy Bobbio <lunar@debian.org>  Fri, 03 Oct 2014 14:12:06 +0200
+
+obfs4proxy (0.0.1-1) unstable; urgency=medium
+
+  * Initial release. (Closes: #760596)
+
+ -- Jérémy Bobbio <lunar@debian.org>  Thu, 18 Sep 2014 18:59:41 +0200
