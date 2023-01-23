@@ -1,0 +1,29 @@
+#!/usr/bin/make -f
+
+PROJECT = obfs4proxy
+OUT = ${CURDIR}/debian/${PROJECT}
+CFG = ${OUT}/etc/${PROJECT}
+
+export DH_OPTIONS
+export DH_GOPKG := github.com/Yawning/obfs4
+export GOCACHE := ${CURDIR}/.cache
+# export GOFLAGS := -ldflags=-w -ldflags=-s -mod=vendor
+export PATH := /usr/local/src/golang/go/bin:${PATH}
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	cd ${PROJECT} && go env && go build
+
+override_dh_auto_clean:
+	cd ${PROJECT} && go clean && go clean -cache
+
+override_dh_auto_install:
+	dh_auto_install --destdir="${OUT}"
+	install -Dm755 "${PROJECT}/${PROJECT}" "${OUT}/usr/bin/${PROJECT}"
+#	install -Dm644 "${PROJECT}/config" "${CFG}/config"
+
+override_dh_auto_test:
+
+override_dh_dwz:

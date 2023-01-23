@@ -1,0 +1,4 @@
+version=3
+opts="uversionmangle=s/-(rc)/~$1/,pgpsigurlmangle=s/$/.asc/" \
+	https://people.torproject.org/~yawning/releases/obfs4proxy/ \
+	obfs4proxy-(.+)\.tar\.[^.]+
