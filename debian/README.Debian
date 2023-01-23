@@ -1,0 +1,83 @@
+obfs4proxy for Debian
+=====================
+
+Configuring an obfs4 bridge
+---------------------------
+
+This is a short guide on how to setup an obfs4 bridge:
+
+1. Setup Tor
+
+   Edit `/etc/tor/torrc` to add:
+
+       SocksPort 0
+       ORPort 443 # or some other port if you already run a webserver/skype
+       BridgeRelay 1
+       Exitpolicy reject *:*
+
+       ## CHANGEME_1 -> provide a nickname for your bridge, can be anything you like
+       #Nickname CHANGEME_1
+       ## CHANGEME_2 -> provide some email address so we can contact you if there's a problem
+       #ContactInfo CHANGEME_2
+
+       ServerTransportPlugin obfs4 exec /usr/bin/obfs4proxy
+
+   Don't forget to uncomment and edit the CHANGEME fields.
+
+2. Launch Tor and verify that it bootstraps
+
+   Restart Tor to use the new configuration file:
+
+       # service tor restart
+
+   Now check `/var/log/tor/log` and you should see something like this:
+
+       Nov 05 16:40:45.000 [notice] We now have enough directory information to build circuits.
+       Nov 05 16:40:45.000 [notice] Bootstrapped 80%: Connecting to the Tor network.
+       Nov 05 16:40:46.000 [notice] Bootstrapped 85%: Finishing handshake with first hop.
+       Nov 05 16:40:46.000 [notice] Bootstrapped 90%: Establishing a Tor circuit.
+       Nov 05 16:40:48.000 [notice] Tor has successfully opened a circuit. Looks like client functionality is working.
+       Nov 05 16:40:48.000 [notice] Bootstrapped 100%: Done.
+
+   If Tor is earlier in the bootstrapping phase, wait until it gets to 100%.
+
+3. Configure the firewall if needed
+
+   If you're behind a NAT/firewall, you'll need to make your bridge
+   reachable from the outside world — both on the ORPort and the
+   obfs4 port. The ORPort is whatever you defined in step two
+   above. To find your obfsproxy port, check your Tor logs for two
+   lines similar to these:
+
+       Oct 05 20:00:41.000 [notice] Registered server transport 'obfs4' at '0.0.0.0:44221
+
+   The last number in each line, in this case 44221, is the TCP port
+   number that you need to forward through your firewall. (This port is
+   randomly chosen the first time Tor starts, but Tor will cache and
+   reuse the same number in future runs.) If you want to change the
+   number, put the following in your `torrc`:
+
+       ServerTransportListenAddr obfs4 0.0.0.0:40000
+
+4. (optional) Get the “Bridge” line
+
+   If you are running a private bridge or wish to give access to
+   your bridge specifically, you can read an example “Bridge” line
+   in `/var/lib/tor/pt_state/obfs4_bridgeline.txt`. The bridge
+   fingerprint is printed in Tor log messages upon startup.
+
+Using an obfs4 bridge
+---------------------
+
+To use an obfs4 bridge, please add the following lines to
+`/etc/tor/torrc`:
+
+    ClientTransportPlugin obfs4 exec /usr/bin/obfs4proxy
+    UseBridges 1
+
+Then for each bridges, add a line looking like the following one:
+
+    Bridge obfs4 192.0.2.42:40000 C2A9DC82AA7E85DB6465EC8C4B1B4B1B77787BE0 cert=VB9mQFAGV/jXguEiXDDthSlXMh1Xr+h4OCfd8ZLXySfzmipU3lmdqLsQiegtsKAE/vurZg iat-mode=0
+
+Actual Bridge lines are usually given by Tor Project's bridge database
+or by the bridge operator directly.
