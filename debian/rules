@@ -1,11 +1,11 @@
 #!/usr/bin/make -f
 
-PROJECT = obfs4proxy
+PROJECT = lyrebird
 OUT = ${CURDIR}/debian/${PROJECT}
 CFG = ${OUT}/etc/${PROJECT}
 
 export DH_OPTIONS
-export DH_GOPKG := github.com/Yawning/obfs4
+export DH_GOPKG := gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird
 export GOCACHE := ${CURDIR}/.cache
 # export GOFLAGS := -ldflags=-w -ldflags=-s -mod=vendor
 export PATH := /usr/local/src/golang/go/bin:${PATH}
@@ -14,15 +14,15 @@ export PATH := /usr/local/src/golang/go/bin:${PATH}
 	dh $@
 
 override_dh_auto_build:
-	cd ${PROJECT} && go env && go build
+	cd cmd/${PROJECT} && go env && go build
 
 override_dh_auto_clean:
-	cd ${PROJECT} && go clean && go clean -cache
+	rm -rf debian/lyrebird
+	cd cmd/${PROJECT} && go clean && go clean -cache
 
 override_dh_auto_install:
 	dh_auto_install --destdir="${OUT}"
-	install -Dm755 "${PROJECT}/${PROJECT}" "${OUT}/usr/bin/${PROJECT}"
-#	install -Dm644 "${PROJECT}/config" "${CFG}/config"
+	install -Dm755 "cmd/${PROJECT}/${PROJECT}" "${OUT}/usr/bin/${PROJECT}"
 
 override_dh_auto_test:
 
