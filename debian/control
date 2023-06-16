@@ -1,24 +1,22 @@
-Source: obfs4proxy
+Source: lyrebird
 Maintainer: Debian Privacy Tools Maintainers <pkg-privacy-maintainers@lists.alioth.debian.org>
 Uploaders: Jérémy Bobbio <lunar@debian.org>, Ximin Luo <infinity0@debian.org>
 Section: net
 Priority: extra
 Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.8
-Vcs-Git: https://anonscm.debian.org/git/pkg-privacy/packages/obfs4proxy.git
-Vcs-Browser: https://anonscm.debian.org/cgit/pkg-privacy/packages/obfs4proxy.git
-XS-Go-Import-Path: git.torproject.org/pluggable-transports/obfs4.git
+XS-Go-Import-Path: https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird.git
 
-Package: obfs4proxy
+Package: lyrebird
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: pluggable transport proxy for Tor, implementing obfs4
- obfs4proxy is a tool that attempts to circumvent censorship by
+ lyrebird is a tool that attempts to circumvent censorship by
  transforming the Tor traffic between the client and the bridge. This way
  censors, who usually monitor traffic between the client and the bridge, will
  see innocent-looking transformed traffic instead of the actual Tor traffic.
  .
- obfs4proxy implements the obfsucation protocols obfs2, obfs3, and obfs4.
+ lyrebird implements the obfsucation protocols obfs2, obfs3, and obfs4.
  .
  It is written in Go and is compliant with the Tor pluggable transports
  specification, and its modular architecture allows it to support multiple
