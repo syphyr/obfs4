@@ -301,14 +301,12 @@ func (req *Request) readCommand() error {
 		}
 		host = string(addr)
 	case atypIPv6:
-		var rawAddr [net.IPv6len]byte
-		if err = req.readFull(rawAddr[:]); err != nil {
+		var addr [net.IPv6len]byte
+		if err = req.readFull(addr[:]); err != nil {
 			_ = req.Reply(ReplyGeneralFailure)
 			return err
 		}
-		addr := make(net.IP, net.IPv6len)
-		copy(addr[:], rawAddr[:])
-		host = fmt.Sprintf("[%s]", addr.String())
+		host = fmt.Sprintf("[%s]", net.IP(addr[:]).String())
 	default:
 		_ = req.Reply(ReplyAddressNotSupported)
 		return fmt.Errorf("unsupported address type 0x%02x", atyp)
