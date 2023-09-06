@@ -64,8 +64,8 @@ func (req *Request) authRFC1929() (err error) {
 		sendErrResp()
 		return fmt.Errorf("username with 0 length")
 	}
-	var uname []byte
-	if uname, err = req.readBytes(int(ulen)); err != nil {
+	uname := make([]byte, ulen)
+	if err = req.readFull(uname); err != nil {
 		sendErrResp()
 		return
 	}
@@ -79,8 +79,8 @@ func (req *Request) authRFC1929() (err error) {
 		sendErrResp()
 		return fmt.Errorf("password with 0 length")
 	}
-	var passwd []byte
-	if passwd, err = req.readBytes(int(plen)); err != nil {
+	passwd := make([]byte, plen)
+	if err = req.readFull(passwd); err != nil {
 		sendErrResp()
 		return
 	}

@@ -203,8 +203,8 @@ func (req *Request) negotiateAuth() (byte, error) {
 	if nmethods, err = req.readByte(); err != nil {
 		return method, err
 	}
-	var methods []byte
-	if methods, err = req.readBytes(int(nmethods)); err != nil {
+	methods := make([]byte, int(nmethods))
+	if err = req.readFull(methods); err != nil {
 		return 0, err
 	}
 
@@ -278,8 +278,8 @@ func (req *Request) readCommand() error {
 	}
 	switch atyp {
 	case atypIPv4:
-		var addr []byte
-		if addr, err = req.readBytes(net.IPv4len); err != nil {
+		var addr [net.IPv4len]byte
+		if err = req.readFull(addr[:]); err != nil {
 			_ = req.Reply(ReplyGeneralFailure)
 			return err
 		}
@@ -294,27 +294,25 @@ func (req *Request) readCommand() error {
 			_ = req.Reply(ReplyGeneralFailure)
 			return fmt.Errorf("domain name with 0 length")
 		}
-		var addr []byte
-		if addr, err = req.readBytes(int(alen)); err != nil {
+		addr := make([]byte, int(alen))
+		if err = req.readFull(addr); err != nil {
 			_ = req.Reply(ReplyGeneralFailure)
 			return err
 		}
 		host = string(addr)
 	case atypIPv6:
-		var rawAddr []byte
-		if rawAddr, err = req.readBytes(net.IPv6len); err != nil {
+		var addr [net.IPv6len]byte
+		if err = req.readFull(addr[:]); err != nil {
 			_ = req.Reply(ReplyGeneralFailure)
 			return err
 		}
-		addr := make(net.IP, net.IPv6len)
-		copy(addr[:], rawAddr[:])
-		host = fmt.Sprintf("[%s]", addr.String())
+		host = fmt.Sprintf("[%s]", net.IP(addr[:]).String())
 	default:
 		_ = req.Reply(ReplyAddressNotSupported)
 		return fmt.Errorf("unsupported address type 0x%02x", atyp)
 	}
-	var rawPort []byte
-	if rawPort, err = req.readBytes(2); err != nil {
+	var rawPort [2]byte
+	if err = req.readFull(rawPort[:]); err != nil {
 		_ = req.Reply(ReplyGeneralFailure)
 		return err
 	}
@@ -349,10 +347,7 @@ func (req *Request) readByteVerify(descr string, expected byte) error {
 	return nil
 }
 
-func (req *Request) readBytes(n int) ([]byte, error) {
-	b := make([]byte, n)
-	if _, err := io.ReadFull(req.rw, b); err != nil {
-		return nil, err
-	}
-	return b, nil
+func (req *Request) readFull(buf []byte) error {
+	_, err := io.ReadFull(req.rw, buf)
+	return err
 }
