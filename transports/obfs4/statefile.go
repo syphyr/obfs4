@@ -239,8 +239,8 @@ func newBridgeFile(stateDir string, st *obfs4ServerState) error {
 	const prefix = "# obfs4 torrc client bridge line\n" +
 		"#\n" +
 		"# This file is an automatically generated bridge line based on\n" +
-		"# the current obfs4proxy configuration.  EDITING IT WILL HAVE\n" +
-		"# NO EFFECT.\n" +
+		"# the current lyrebird configuration.  EDITING IT WILL HAVE NO\n" +
+		"# EFFECT.\n" +
 		"#\n" +
 		"# Before distributing this Bridge, edit the placeholder fields\n" +
 		"# to contain the actual values:\n" +

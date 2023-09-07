@@ -50,9 +50,9 @@ import (
 )
 
 const (
-	obfs4proxyVersion = "0.0.14"
-	obfs4proxyLogFile = "obfs4proxy.log"
-	socksAddr         = "127.0.0.1:0"
+	lyrebirdVersion = "0.0.14"
+	lyrebirdLogFile = "lyrebird.log"
+	socksAddr       = "127.0.0.1:0"
 )
 
 var stateDir string
@@ -301,7 +301,7 @@ func copyLoop(a net.Conn, b net.Conn) error {
 }
 
 func getVersion() string {
-	return fmt.Sprintf("obfs4proxy-%s", obfs4proxyVersion)
+	return fmt.Sprintf("lyrebird-%s", lyrebirdVersion)
 }
 
 func main() {
@@ -312,7 +312,7 @@ func main() {
 	_, execName := path.Split(os.Args[0])
 	showVer := flag.Bool("version", false, "Print version and exit")
 	logLevelStr := flag.String("logLevel", "ERROR", "Log level (ERROR/WARN/INFO/DEBUG)")
-	enableLogging := flag.Bool("enableLogging", false, "Log to TOR_PT_STATE_LOCATION/"+obfs4proxyLogFile)
+	enableLogging := flag.Bool("enableLogging", false, "Log to TOR_PT_STATE_LOCATION/"+lyrebirdLogFile)
 	unsafeLogging := flag.Bool("unsafeLogging", false, "Disable the address scrubber")
 	flag.Parse()
 
@@ -334,7 +334,7 @@ func main() {
 	if stateDir, err = pt.MakeStateDir(); err != nil {
 		golog.Fatalf("[ERROR]: %s - No state directory: %s", execName, err)
 	}
-	if err = log.Init(*enableLogging, path.Join(stateDir, obfs4proxyLogFile), *unsafeLogging); err != nil {
+	if err = log.Init(*enableLogging, path.Join(stateDir, lyrebirdLogFile), *unsafeLogging); err != nil {
 		golog.Fatalf("[ERROR]: %s - failed to initialize logging", execName)
 	}
 	if err = transports.Init(); err != nil {
