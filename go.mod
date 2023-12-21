@@ -3,7 +3,7 @@ module gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird
 require (
 	filippo.io/edwards25519 v1.1.0
 	github.com/dchest/siphash v1.2.3
-	github.com/refraction-networking/utls v1.5.4
+	github.com/refraction-networking/utls v1.6.0
 	gitlab.com/yawning/edwards25519-extra v0.0.0-20231005122941-2149dcafc266
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/goptlib v1.5.0
 	golang.org/x/crypto v0.16.0
@@ -12,8 +12,7 @@ require (
 
 require (
 	github.com/andybalholm/brotli v1.0.5 // indirect
-	github.com/cloudflare/circl v1.3.3 // indirect
-	github.com/gaukas/godicttls v0.0.4 // indirect
+	github.com/cloudflare/circl v1.3.6 // indirect
 	github.com/klauspost/compress v1.16.7 // indirect
 	github.com/quic-go/quic-go v0.37.4 // indirect
 	golang.org/x/sys v0.15.0 // indirect
