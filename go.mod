@@ -3,7 +3,7 @@ module gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird
 require (
 	filippo.io/edwards25519 v1.1.0
 	github.com/dchest/siphash v1.2.3
-	github.com/refraction-networking/utls v1.6.2
+	github.com/refraction-networking/utls v1.6.3
 	gitlab.com/yawning/edwards25519-extra v0.0.0-20231005122941-2149dcafc266
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/goptlib v1.5.0
 	golang.org/x/crypto v0.19.0
