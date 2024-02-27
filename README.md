@@ -42,7 +42,7 @@ the same dependency versions, while `go get -d` always downloads master.
 
 To build:
 
-	`go build ./cmd/lyrebird`
+	`make build`
 
 To install, copy `./lyrebird` to a permanent location
 (Eg: `/usr/local/bin`)

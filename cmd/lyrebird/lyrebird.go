@@ -50,11 +50,11 @@ import (
 )
 
 const (
-	lyrebirdVersion = "0.0.14"
 	lyrebirdLogFile = "lyrebird.log"
 	socksAddr       = "127.0.0.1:0"
 )
 
+var lyrebirdVersion = "devel"
 var stateDir string
 var termMon *termMonitor
 
@@ -300,10 +300,6 @@ func copyLoop(a net.Conn, b net.Conn) error {
 	return nil
 }
 
-func getVersion() string {
-	return fmt.Sprintf("lyrebird-%s", lyrebirdVersion)
-}
-
 func main() {
 	// Initialize the termination state monitor as soon as possible.
 	termMon = newTermMonitor()
@@ -317,7 +313,7 @@ func main() {
 	flag.Parse()
 
 	if *showVer {
-		fmt.Printf("%s\n", getVersion())
+		fmt.Printf("%s\n", lyrebirdVersion)
 		os.Exit(0)
 	}
 	if err := log.SetLogLevel(*logLevelStr); err != nil {
@@ -342,7 +338,7 @@ func main() {
 		os.Exit(-1)
 	}
 
-	log.Noticef("%s - launched", getVersion())
+	log.Noticef("%s - launched", lyrebirdVersion)
 
 	// Do the managed pluggable transport protocol configuration.
 	if isClient {
