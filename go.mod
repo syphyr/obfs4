@@ -8,7 +8,7 @@ require (
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/goptlib v1.5.0
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.0-20240409095858-c6e11b4fc27b
 	golang.org/x/crypto v0.22.0
-	golang.org/x/net v0.23.0
+	golang.org/x/net v0.24.0
 )
 
 require (
