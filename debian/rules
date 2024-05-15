@@ -7,7 +7,7 @@ CFG = ${OUT}/etc/${PROJECT}
 export DH_OPTIONS
 export DH_GOPKG := gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird
 export GOCACHE := ${CURDIR}/.cache
-# export GOFLAGS := -ldflags=-w -ldflags=-s -mod=vendor
+export GOFLAGS := -ldflags=-w -ldflags=-s
 export PATH := /usr/local/src/golang/go/bin:${PATH}
 
 %:
