@@ -62,6 +62,7 @@ func clientSetup() (launched bool, listeners []net.Listener) {
 	if err != nil {
 		golog.Fatal(err)
 	}
+	pt.ReportVersion("lyrebird", lyrebirdVersion)
 
 	ptClientProxy, err := ptGetProxy()
 	if err != nil {
@@ -180,6 +181,7 @@ func serverSetup() (launched bool, listeners []net.Listener) {
 	if err != nil {
 		golog.Fatal(err)
 	}
+	pt.ReportVersion("lyrebird", lyrebirdVersion)
 
 	for _, bindaddr := range ptServerInfo.Bindaddrs {
 		name := bindaddr.MethodName
@@ -304,7 +306,7 @@ func main() {
 	flag.Parse()
 
 	if *showVer {
-		fmt.Printf("%s\n", lyrebirdVersion)
+		fmt.Printf("lyrebird %s\n", lyrebirdVersion)
 		os.Exit(0)
 	}
 	if err := log.SetLogLevel(*logLevelStr); err != nil {
