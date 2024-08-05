@@ -106,6 +106,7 @@ func (c *clientFactory) dial(network, address string, dialFn base.DialFunc, args
 	for _, addr := range config.RemoteAddresses {
 		if tcpConn, err := dialFn("tcp", addr); err == nil {
 			conn = tcpConn
+			break
 		}
 	}
 	if conn == nil {
@@ -161,7 +162,12 @@ func getAddressesFromHostname(hostname, port string) ([]string, error) {
 		if ip == nil || ip.IsLoopback() || ip.IsUnspecified() || ip.IsMulticast() || ip.IsLinkLocalUnicast() || ip.IsPrivate() {
 			continue
 		}
-		addresses = append(addresses, a+":"+port)
+		if ip.To4() != nil {
+			addresses = append(addresses, a+":"+port)
+		} else {
+			addresses = append(addresses, "["+a+"]:"+port)
+		}
+
 	}
 	if len(addresses) == 0 {
 		return addresses, fmt.Errorf("Could not find any valid IP for %s", hostname)
