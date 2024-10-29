@@ -10,9 +10,20 @@ import (
 	pt "gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/goptlib"
 	"gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird/transports/base"
 	sf "gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2/client/lib"
+	"gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2/common/event"
 )
 
 const transportName = "snowflake"
+
+type sfEventLogger struct {
+	onEventCallback func(e base.TransportEvent)
+}
+
+func (el *sfEventLogger) OnNewSnowflakeEvent(e event.SnowflakeEvent) {
+	if el.onEventCallback != nil {
+		el.onEventCallback(e)
+	}
+}
 
 type Transport struct{}
 
@@ -33,7 +44,8 @@ func (t *Transport) ServerFactory(stateDir string, args *pt.Args) (base.ServerFa
 }
 
 type snowflakeClientFactory struct {
-	transport base.Transport
+	transport   base.Transport
+	eventLogger *sfEventLogger
 }
 
 func (cf *snowflakeClientFactory) Transport() base.Transport {
@@ -86,6 +98,12 @@ func (cf *snowflakeClientFactory) ParseArgs(args *pt.Args) (interface{}, error) 
 	return config, nil
 }
 
+func (cf *snowflakeClientFactory) OnEvent(f func(e base.TransportEvent)) {
+	cf.eventLogger = &sfEventLogger{
+		onEventCallback: f,
+	}
+}
+
 func (cf *snowflakeClientFactory) Dial(network, address string, dialFn base.DialFunc, args interface{}) (net.Conn, error) {
 	config, ok := args.(sf.ClientConfig)
 	if !ok {
@@ -95,5 +113,6 @@ func (cf *snowflakeClientFactory) Dial(network, address string, dialFn base.Dial
 	if err != nil {
 		return nil, err
 	}
+	transport.AddSnowflakeEventListener(cf.eventLogger)
 	return transport.Dial()
 }

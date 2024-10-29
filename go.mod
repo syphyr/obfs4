@@ -12,6 +12,7 @@ require (
 )
 
 require (
+	git.torproject.org/pluggable-transports/snowflake.git/v2 v2.5.1 // indirect
 	github.com/andybalholm/brotli v1.0.6 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.25.3 // indirect
 	github.com/aws/aws-sdk-go-v2/config v1.27.7 // indirect

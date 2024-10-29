@@ -150,6 +150,9 @@ func (c *clientFactory) dial(network, address string, dialFn base.DialFunc, args
 	return conn, nil
 }
 
+// Not yet implemented
+func (cf *clientFactory) OnEvent(f func(base.TransportEvent)) {}
+
 func getAddressesFromHostname(hostname, port string) ([]string, error) {
 	addresses := []string{}
 	addr, err := net.LookupHost(hostname)

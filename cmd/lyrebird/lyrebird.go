@@ -87,6 +87,10 @@ func clientSetup() (launched bool, listeners []net.Listener) {
 			continue
 		}
 
+		f.OnEvent(func(e base.TransportEvent) {
+			pt.Log(pt.LogSeverityNotice, e.String())
+		})
+
 		ln, err := net.Listen("tcp", socksAddr)
 		if err != nil {
 			_ = pt.CmethodError(name, err.Error())
