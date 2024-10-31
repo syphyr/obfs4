@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"net"
+	"net/url"
 	"strconv"
 	"strings"
 
@@ -11,6 +12,7 @@ import (
 	"gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/lyrebird/transports/base"
 	sf "gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2/client/lib"
 	"gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2/common/event"
+	"gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2/common/proxy"
 )
 
 const transportName = "snowflake"
@@ -94,6 +96,22 @@ func (cf *snowflakeClientFactory) ParseArgs(args *pt.Args) (interface{}, error) 
 	}
 	if arg, ok := args.Get("fingerprint"); ok {
 		config.BridgeFingerprint = arg
+	}
+	if arg, ok := args.Get("proxy"); ok {
+		outboundProxy, err := url.Parse(arg)
+		if err != nil {
+			return nil, fmt.Errorf("Invalid SOCKS arg: proxy=%s", arg)
+		}
+		if err := proxy.CheckProxyProtocolSupport(outboundProxy); err != nil {
+			return nil, fmt.Errorf("proxy is not supported: %s", err.Error())
+		}
+		client := proxy.NewSocks5UDPClient(outboundProxy)
+		conn, err := client.ListenPacket("udp", nil)
+		if err != nil {
+			return nil, fmt.Errorf("proxy test failure: %s", err.Error())
+		}
+		conn.Close()
+		config.CommunicationProxy = outboundProxy
 	}
 	return config, nil
 }
