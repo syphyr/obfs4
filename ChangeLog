@@ -1,3 +1,7 @@
+Changes in version 0.5.0 - 2024-11-07:
+- Add snowflake transport to Lyrebird
+- Add event logging support for all transports
+
 Changes in version 0.4.0 - 2024-10-08:
 - Use go 1.21
 
