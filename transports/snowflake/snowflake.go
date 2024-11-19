@@ -37,6 +37,7 @@ func (t *Transport) Name() string {
 // ClientFactory returns a new snowflakeClientFactory instance.
 func (t *Transport) ClientFactory(stateDir string) (base.ClientFactory, error) {
 	cf := &snowflakeClientFactory{transport: t}
+	cf.eventLogger = &sfEventLogger{}
 	return cf, nil
 }
 
@@ -117,9 +118,7 @@ func (cf *snowflakeClientFactory) ParseArgs(args *pt.Args) (interface{}, error) 
 }
 
 func (cf *snowflakeClientFactory) OnEvent(f func(e base.TransportEvent)) {
-	cf.eventLogger = &sfEventLogger{
-		onEventCallback: f,
-	}
+	cf.eventLogger.onEventCallback = f
 }
 
 func (cf *snowflakeClientFactory) Dial(network, address string, dialFn base.DialFunc, args interface{}) (net.Conn, error) {
