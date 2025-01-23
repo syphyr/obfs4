@@ -7,7 +7,7 @@ require (
 	gitlab.com/yawning/edwards25519-extra v0.0.0-20231005122941-2149dcafc266
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/goptlib v1.6.0
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2 v2.10.1
-	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.0-20240711104640-e64b1b3562f3
+	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.0-20250123115507-e4d49e1161c9
 	golang.org/x/crypto v0.32.0
 	golang.org/x/net v0.34.0
 )
