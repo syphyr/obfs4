@@ -189,8 +189,8 @@ gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/ptutil v0.0.0-202
 gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/ptutil v0.0.0-20240710081135-6c4d8ed41027/go.mod h1:n/u74vECtThx3cvWkCD7j7PRtMb9oBTq33m74g4hL+c=
 gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2 v2.10.1 h1:Oik2tb1qbnbrxOlvRNul2FrBi4j2pnqFvPPEWCOSG1I=
 gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2 v2.10.1/go.mod h1:DI4jAA1yfL9jzwDsSuW6D5ePrDCzEArQ58vdhKWHxDA=
-gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.0-20250123115507-e4d49e1161c9 h1:FX0jbyp2RTnfP/zC9VK+rIqEO1iBjhYUgQkX516kGyw=
-gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.0-20250123115507-e4d49e1161c9/go.mod h1:aEzSbkzOc38Cg7gLg0BmRDwQgxwjbbKSiAv052xTS7I=
+gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.2 h1:vc8FVbfHZqZoiR3XDpDX2yymobnsbw+Nb+c0OakXnsw=
+gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.2/go.mod h1:aEzSbkzOc38Cg7gLg0BmRDwQgxwjbbKSiAv052xTS7I=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
 golang.org/x/crypto v0.0.0-20191011191535-87dc89f01550/go.mod h1:yigFU9vqHzYiE8UmvKecakEJjdnWj3jj499lnFckfCI=
 golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
