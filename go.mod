@@ -8,7 +8,7 @@ require (
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/goptlib v1.6.0
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2 v2.10.1
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.0-20250123115507-e4d49e1161c9
-	golang.org/x/crypto v0.32.0
+	golang.org/x/crypto v0.33.0
 	golang.org/x/net v0.34.0
 )
 
@@ -70,9 +70,9 @@ require (
 	github.com/xtaci/smux v1.5.33 // indirect
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/ptutil v0.0.0-20240710081135-6c4d8ed41027 // indirect
 	golang.org/x/mod v0.22.0 // indirect
-	golang.org/x/sync v0.10.0 // indirect
-	golang.org/x/sys v0.29.0 // indirect
-	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/sync v0.11.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
+	golang.org/x/text v0.22.0 // indirect
 	golang.org/x/tools v0.29.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
