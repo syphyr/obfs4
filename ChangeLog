@@ -1,3 +1,8 @@
+Changes in version 0.6.0 - 2025-03-19:
+- snowflake: Prevent a crash if OnEvent is not called
+- meek: include Let's Encrypt root CI for old Android versions
+- webtunnel: make http/socks proxies work
+
 Changes in version 0.5.0 - 2024-11-07:
 - Add snowflake transport to Lyrebird
 - Add event logging support for all transports
