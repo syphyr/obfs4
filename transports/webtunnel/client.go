@@ -1,6 +1,7 @@
 package webtunnel
 
 import (
+	"encoding/base64"
 	"fmt"
 	"net"
 	"net/url"
@@ -20,6 +21,8 @@ type clientConfig struct {
 	TLSKind         string
 	TLSServerName   string
 	UTLSFingerprint string
+
+	PinnedCertificateChainHash string
 }
 
 type clientFactory struct {
@@ -86,6 +89,10 @@ func (c *clientFactory) parseArgs(args *pt.Args) (interface{}, error) {
 		}
 	}
 
+	if pinnedCertificateChainHash, ok := args.Get("cert"); ok {
+		config.PinnedCertificateChainHash = pinnedCertificateChainHash
+	}
+
 	return config, nil
 }
 
@@ -108,6 +115,15 @@ func (c *clientFactory) dial(network, address string, dialFn base.DialFunc, args
 
 	if config.TLSKind != "" {
 		conf := &tls.Config{ServerName: config.TLSServerName}
+		if config.PinnedCertificateChainHash != "" {
+			conf.AllowInsecure = true
+			decodedCert, err := base64.StdEncoding.DecodeString(config.PinnedCertificateChainHash)
+			if err != nil {
+				return nil, fmt.Errorf("failed to decode approved certificate chain hash : %v", err)
+			}
+			conf.PinnedPeerCertificateChainSha256 = append(conf.PinnedPeerCertificateChainSha256, decodedCert)
+		}
+
 		if config.UTLSFingerprint == "" {
 			if tlsTransport, err := tls.NewTLSTransport(conf); err != nil {
 				return nil, err
@@ -119,7 +135,10 @@ func (c *clientFactory) dial(network, address string, dialFn base.DialFunc, args
 				}
 			}
 		} else {
-			utlsConfig := &uTLSConfig{ServerName: config.TLSServerName, uTLSFingerprint: config.UTLSFingerprint}
+			utlsConfig := &uTLSConfig{ServerName: config.TLSServerName,
+				uTLSFingerprint:                  config.UTLSFingerprint,
+				allowInsecure:                    conf.AllowInsecure,
+				pinnedPeerCertificateChainSha256: conf.PinnedPeerCertificateChainSha256}
 			if utlsTransport, err := newUTLSTransport(utlsConfig); err != nil {
 				return nil, err
 			} else {
