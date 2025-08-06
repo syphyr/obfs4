@@ -17,6 +17,9 @@ type uTLSConfig struct {
 
 	uTLSFingerprint string
 
+	// allowInsecure is used to skip certificate verification.
+	// This setting should not be used unless pinnedPeerCertificateChainSha256
+	// is set, otherwise it will allow any certificate to be accepted.
 	allowInsecure                    bool
 	pinnedPeerCertificateChainSha256 [][]byte
 }
@@ -46,6 +49,9 @@ func (t *uTLSTransport) Client(conn net.Conn) (net.Conn, error) {
 		fp, err := utlsutil.ParseClientHelloID(t.uTLSFingerprint)
 		if err != nil {
 			return nil, err
+		}
+		if t.allowInsecure && t.pinnedPeerCertificateChainSha256 == nil {
+			return nil, errors.New("naked allowInsecure is not allowed, pinnedPeerCertificateChainSha256 must be set to verify remote certificate chain")
 		}
 		conf := &utls.Config{ServerName: t.serverName,
 			InsecureSkipVerify:    t.allowInsecure,
