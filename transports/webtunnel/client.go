@@ -31,6 +31,8 @@ type clientConfig struct {
 
 type clientFactory struct {
 	parent base.Transport
+
+	serverNameGeneratorHolder *serverNameGeneratorHolder
 }
 
 func (c *clientFactory) Transport() base.Transport {
@@ -121,8 +123,22 @@ func (c *clientFactory) dial(network, address string, dialFn base.DialFunc, args
 		return nil, fmt.Errorf("error dialing %s: %v", config.RemoteAddress, err)
 	}
 
+	var serverName string
+	var serverNameGenerator *serverNameGenerator
+	if config.TLSServerName != "" {
+		config.TLSServerName = strings.TrimSpace(config.TLSServerName)
+		generator, err := c.serverNameGeneratorHolder.GetGenerator(config.TLSServerName)
+		if err != nil {
+			return nil, fmt.Errorf("error getting server name generator: %v", err)
+		}
+		serverName = generator.GenerateServerName()
+		serverNameGenerator = generator
+	}
+
+	pt.Log(pt.LogSeverityNotice, "Using TLS SNI: "+serverName)
+
 	if config.TLSKind != "" {
-		conf := &tls.Config{ServerName: config.TLSServerName}
+		conf := &tls.Config{ServerName: serverName}
 		if config.PinnedCertificateChainHash != "" {
 			conf.AllowInsecure = true
 			decodedCert, err := base64.StdEncoding.DecodeString(config.PinnedCertificateChainHash)
@@ -143,7 +159,7 @@ func (c *clientFactory) dial(network, address string, dialFn base.DialFunc, args
 				}
 			}
 		} else {
-			utlsConfig := &uTLSConfig{ServerName: config.TLSServerName,
+			utlsConfig := &uTLSConfig{ServerName: serverName,
 				uTLSFingerprint:                  config.UTLSFingerprint,
 				allowInsecure:                    conf.AllowInsecure,
 				pinnedPeerCertificateChainSha256: conf.PinnedPeerCertificateChainSha256,
@@ -165,6 +181,9 @@ func (c *clientFactory) dial(network, address string, dialFn base.DialFunc, args
 		return nil, err
 	} else {
 		if httpUpgradeConn, err := httpupgradeTransport.Client(conn); err != nil {
+			if serverNameGenerator != nil {
+				serverNameGenerator.RerollIfServerNameCandidateNotChanged(serverName)
+			}
 			return nil, err
 		} else {
 			conn = httpUpgradeConn

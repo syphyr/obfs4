@@ -24,7 +24,11 @@ func (t *transport) Name() string {
 }
 
 func (t *transport) ClientFactory(stateDir string) (base.ClientFactory, error) {
-	return &clientFactory{parent: t}, nil
+	serverNameGeneratorHolderInst, err := newServerNameGeneratorHolder()
+	if err != nil {
+		return nil, err
+	}
+	return &clientFactory{parent: t, serverNameGeneratorHolder: serverNameGeneratorHolderInst}, nil
 }
 
 func (t *transport) ServerFactory(stateDir string, args *pt.Args) (base.ServerFactory, error) {
