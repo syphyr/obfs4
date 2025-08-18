@@ -22,6 +22,8 @@ type uTLSConfig struct {
 	// is set, otherwise it will allow any certificate to be accepted.
 	allowInsecure                    bool
 	pinnedPeerCertificateChainSha256 [][]byte
+
+	InsecureServerNameToVerify string
 }
 
 func newUTLSTransport(config *uTLSConfig) (uTLSTransport, error) {
@@ -30,6 +32,7 @@ func newUTLSTransport(config *uTLSConfig) (uTLSTransport, error) {
 		uTLSFingerprint:                  config.uTLSFingerprint,
 		allowInsecure:                    config.allowInsecure,
 		pinnedPeerCertificateChainSha256: config.pinnedPeerCertificateChainSha256,
+		InsecureServerNameToVerify:       config.InsecureServerNameToVerify,
 	}, nil
 }
 
@@ -41,6 +44,8 @@ type uTLSTransport struct {
 
 	allowInsecure                    bool
 	pinnedPeerCertificateChainSha256 [][]byte
+
+	InsecureServerNameToVerify string
 }
 
 func (t *uTLSTransport) Client(conn net.Conn) (net.Conn, error) {
@@ -54,8 +59,9 @@ func (t *uTLSTransport) Client(conn net.Conn) (net.Conn, error) {
 			return nil, errors.New("naked allowInsecure is not allowed, pinnedPeerCertificateChainSha256 must be set to verify remote certificate chain")
 		}
 		conf := &utls.Config{ServerName: t.serverName,
-			InsecureSkipVerify:    t.allowInsecure,
-			VerifyPeerCertificate: t.verifyPeerCert}
+			InsecureSkipVerify:         t.allowInsecure,
+			VerifyPeerCertificate:      t.verifyPeerCert,
+			InsecureServerNameToVerify: t.InsecureServerNameToVerify}
 		return utls.UClient(conn, conf, *fp), nil
 	}
 	return nil, errors.New("unknown kind")

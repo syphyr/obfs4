@@ -22,6 +22,10 @@ type clientConfig struct {
 	TLSServerName   string
 	UTLSFingerprint string
 
+	// UTLSInsecureServerNameToVerify is used to specify the assumed server name
+	// when using uTLS.
+	UTLSInsecureServerNameToVerify string
+
 	PinnedCertificateChainHash string
 }
 
@@ -93,6 +97,10 @@ func (c *clientFactory) parseArgs(args *pt.Args) (interface{}, error) {
 		config.PinnedCertificateChainHash = pinnedCertificateChainHash
 	}
 
+	if serverNameToVerify, ok := args.Get("utls-authority"); ok {
+		config.UTLSInsecureServerNameToVerify = serverNameToVerify
+	}
+
 	return config, nil
 }
 
@@ -138,7 +146,9 @@ func (c *clientFactory) dial(network, address string, dialFn base.DialFunc, args
 			utlsConfig := &uTLSConfig{ServerName: config.TLSServerName,
 				uTLSFingerprint:                  config.UTLSFingerprint,
 				allowInsecure:                    conf.AllowInsecure,
-				pinnedPeerCertificateChainSha256: conf.PinnedPeerCertificateChainSha256}
+				pinnedPeerCertificateChainSha256: conf.PinnedPeerCertificateChainSha256,
+				InsecureServerNameToVerify:       config.UTLSInsecureServerNameToVerify,
+			}
 			if utlsTransport, err := newUTLSTransport(utlsConfig); err != nil {
 				return nil, err
 			} else {
