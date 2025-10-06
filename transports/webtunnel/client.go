@@ -20,6 +20,7 @@ type clientConfig struct {
 	Path            string
 	TLSKind         string
 	TLSServerName   string
+	HTTPHost        string
 	UTLSFingerprint string
 
 	// UTLSInsecureServerNameToVerify is used to specify the assumed server name
@@ -67,6 +68,7 @@ func (c *clientFactory) parseArgs(args *pt.Args) (interface{}, error) {
 		}
 		config.Path = strings.TrimPrefix(url.EscapedPath(), "/")
 		config.TLSServerName = url.Hostname()
+		config.HTTPHost = url.Hostname()
 		port := url.Port()
 		if port == "" {
 			port = defaultPort
@@ -176,7 +178,7 @@ func (c *clientFactory) dial(network, address string, dialFn base.DialFunc, args
 			}
 		}
 	}
-	upgradeConfig := httpupgrade.Config{Path: config.Path, Host: config.TLSServerName}
+	upgradeConfig := httpupgrade.Config{Path: config.Path, Host: config.HTTPHost}
 	if httpupgradeTransport, err := httpupgrade.NewHTTPUpgradeTransport(&upgradeConfig); err != nil {
 		return nil, err
 	} else {
