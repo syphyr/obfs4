@@ -1,5 +1,5 @@
 test:
-  image: golang:bookworm
+  image: golang:1.22-bookworm
   script:
     - test -z "$(go fmt ./...)"
     - go vet ./...
