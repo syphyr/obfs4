@@ -72,4 +72,4 @@ require (
 
 go 1.22.0
 
-replace github.com/refraction-networking/utls v1.6.7 => gitlab.torproject.org/shelikhoo/utls-temporary v0.0.0-20250428152032-7f32539913c8
+replace github.com/refraction-networking/utls v1.6.7 => gitlab.torproject.org/shelikhoo/utls-temporary v0.0.0-20251015130924-2828941a9a48

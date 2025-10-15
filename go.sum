@@ -151,8 +151,8 @@ github.com/yuin/goldmark v1.3.5/go.mod h1:mwnBkeHKe2W/ZEtQ+71ViKU8L12m81fl3OWwC1
 github.com/yuin/goldmark v1.4.13/go.mod h1:6yULJ656Px+3vBD8DxQVa3kxgyrAnzto9xy5taEt/CY=
 gitlab.com/yawning/edwards25519-extra v0.0.0-20231005122941-2149dcafc266 h1:IvjshROr8z24+UCiOe/90cUWt3QDr8Rt+VkUjZsn+i0=
 gitlab.com/yawning/edwards25519-extra v0.0.0-20231005122941-2149dcafc266/go.mod h1:K/3SQWdJL6udzwInHk1gaYaECYxMp9dDayniPq6gCSo=
-gitlab.torproject.org/shelikhoo/utls-temporary v0.0.0-20250428152032-7f32539913c8 h1:zZ1r9UjJ4qSPoLZG/vzITRsO0Qacpm20HlRAg7JVJ8Y=
-gitlab.torproject.org/shelikhoo/utls-temporary v0.0.0-20250428152032-7f32539913c8/go.mod h1:BC3O4vQzye5hqpmDTWUqi4P5DDhzJfkV1tdqtawQIH0=
+gitlab.torproject.org/shelikhoo/utls-temporary v0.0.0-20251015130924-2828941a9a48 h1:gERQAi5zH7gjKYKpujqH4s0qBinfi01c1TPZDSqrKv4=
+gitlab.torproject.org/shelikhoo/utls-temporary v0.0.0-20251015130924-2828941a9a48/go.mod h1:BC3O4vQzye5hqpmDTWUqi4P5DDhzJfkV1tdqtawQIH0=
 gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/goptlib v1.6.0 h1:KD9m+mRBwtEdqe94Sv72uiedMWeRdIr4sXbrRyzRiIo=
 gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/goptlib v1.6.0/go.mod h1:70bhd4JKW/+1HLfm+TMrgHJsUHG4coelMWwiVEJ2gAg=
 gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/ptutil v0.0.0-20250130151315-efaf4e0ec0d3 h1:pwWCiqrB6b3SynILsv3M+76utmcgMiTZ2aqfccjWmxo=
