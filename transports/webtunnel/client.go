@@ -95,6 +95,8 @@ func (c *clientFactory) parseArgs(args *pt.Args) (interface{}, error) {
 		if config.UTLSFingerprint == "none" {
 			config.UTLSFingerprint = ""
 		}
+	} else {
+		config.UTLSFingerprint = "hellorandomizednoalpn"
 	}
 
 	if pinnedCertificateChainHash, ok := args.Get("cert"); ok {
