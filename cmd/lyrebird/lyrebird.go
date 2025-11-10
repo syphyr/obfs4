@@ -30,6 +30,7 @@
 package main
 
 import (
+	"cmp"
 	"flag"
 	"fmt"
 	"io"
@@ -290,14 +291,6 @@ func serverHandler(f base.ServerFactory, conn net.Conn, info *pt.ServerInfo) {
 }
 
 func copyLoop(a net.Conn, b net.Conn) error {
-	firstErr := func(errors ...error) error {
-		for _, err := range errors {
-			if err != nil {
-				return err
-			}
-		}
-		return nil
-	}
 	// Note: b is always the pt connection.  a is the SOCKS/ORPort connection.
 	errChan := make(chan error, 1)
 
@@ -312,7 +305,7 @@ func copyLoop(a net.Conn, b net.Conn) error {
 	// terminating closes the other, the second error in the channel will be
 	// something like EINVAL (though io.Copy() will swallow EOF), so only the
 	// first error is returned.
-	return firstErr(<-errChan, err, a.Close(), b.Close())
+	return cmp.Or(<-errChan, err, a.Close(), b.Close())
 }
 
 func main() {
