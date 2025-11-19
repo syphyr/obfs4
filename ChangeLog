@@ -1,3 +1,9 @@
+Changes in version 0.7.0 - 2025-11-19:
+- add certificate hash chain pinning support to webtunnel
+- Add multiple server name support for webtunnel
+- enable utls by default for webtunnel
+- Add sni-imitation option
+
 Changes in version 0.6.1 - 2025-04-28:
 - backported fix for tls version downgrade in utls
 - fix Dual stack (IPv4/IPv6) support in non-linux platforms
