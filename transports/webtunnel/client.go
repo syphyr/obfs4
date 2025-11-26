@@ -108,7 +108,7 @@ func (c *clientFactory) parseArgs(args *pt.Args) (interface{}, error) {
 		config.PinnedCertificateChainHash = pinnedCertificateChainHash
 	}
 
-	if serverNameToVerify, ok := args.Get("utls-authority"); ok {
+	if serverNameToVerify, ok := args.Get("expect-cert-name"); ok {
 		config.UTLSInsecureServerNameToVerify = serverNameToVerify
 	}
 
