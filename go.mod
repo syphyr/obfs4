@@ -7,7 +7,7 @@ require (
 	gitlab.com/yawning/edwards25519-extra v0.0.0-20231005122941-2149dcafc266
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/goptlib v1.6.0
 	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/v2 v2.11.0
-	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.3-0.20250724131018-aab00213ba56
+	gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/webtunnel v0.0.3
 	golang.org/x/crypto v0.33.0
 	golang.org/x/net v0.35.0
 )
@@ -72,4 +72,4 @@ require (
 
 go 1.22.0
 
-replace github.com/refraction-networking/utls v1.6.7 => gitlab.torproject.org/shelikhoo/utls-temporary v0.0.0-20251015130924-2828941a9a48
+replace github.com/refraction-networking/utls v1.6.7 => gitlab.torproject.org/shelikhoo/utls-temporary v0.0.0-20260114141111-0f042ad603ef
