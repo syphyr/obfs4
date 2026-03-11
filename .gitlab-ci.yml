@@ -5,3 +5,13 @@ test:
     - go vet ./...
     - go test -v ./...
     - go build ./cmd/lyrebird
+
+go-1.22:
+  image: golang:1.22-bookworm
+  script:
+    - apt-get update
+    - apt-get -qy install --no-install-recommends patch
+    - patch -p1 < go-1.22.patch
+    - go vet ./...
+    - go test -v ./...
+    - go build ./cmd/lyrebird
