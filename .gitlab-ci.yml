@@ -15,3 +15,9 @@ go-1.22:
     - go vet ./...
     - go test -v ./...
     - go build ./cmd/lyrebird
+
+variables:
+  GITLAB_ADVANCED_SAST_ENABLED: 'true'
+
+include:
+  - template: Jobs/SAST.gitlab-ci.yml
