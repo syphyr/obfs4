@@ -1,0 +1,65 @@
+# The lines below are called `modelines`. See `:help modeline`
+# Feel free to remove those if you don't want/need to use them.
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
+
+before:
+  hooks:
+    # You may remove this if you don't use go modules.
+    - go mod tidy
+
+builds:
+  - id: lyrebird
+    main: ./cmd/lyrebird
+    binary: lyrebird
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    goarch:
+      - arm64
+      - amd64
+    flags:
+      - -trimpath
+    ldflags:
+      - -X main.date={{.CommitDate}}
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+nfpms:
+  - id: lyrebird
+    package_name: lyrebird
+    ids:
+      - lyrebird
+    maintainer: Tor Anti-censorship Team <anti-censorship-team@lists.torproject.org>
+    homepage: https://www.torproject.org/
+    license: BSD-3-Clause
+    description: |
+      Integrated plugable transports for Tor
+      Lyrebird is a fork of obfs4proxy with many improvements and it implements
+      several pluggable transports including obfs4, snowflake, webtunnel and meek. 
+    section: net
+    contents:
+      # TODO: this would be nice to be compressed
+      - src: doc/lyrebird.1
+        dst: /usr/share/man/man1/
+        file_info:
+          mode: 644
+    formats:
+      - deb
+    deb:
+      fields:
+        Source: lyrebird
+    mtime: "{{ .CommitDate }}"
+    version_metadata: "tpo"
+    release: 1
+    
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
