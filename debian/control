@@ -1,0 +1,11 @@
+Source: lyrebird
+Maintainer: Tor Anti-censorship Team <anti-censorship-team@lists.torproject.org>
+
+Package: lyrebird
+Section: net
+Priority: optional
+Architecture: any
+Homepage: https://www.torproject.org/
+Description: Integrated plugable transports for Tor
+ Lyrebird is a fork of obfs4proxy with many improvements and it implements
+ several pluggable transports including obfs4, snowflake, webtunnel and meek.
